@@ -10,10 +10,10 @@ RUN mkdir -p /opt/cuttle \
     && GOPATH=`pwd` go get github.com/mrkschan/cuttle
 
 # Copy config
-COPY cuttle.yml .
+COPY cuttle.yml /opt/cuttle/config/
 
 # Clean up (trims image size)
 RUN apk del git && rm -rf /var/cache/apk/*
 
 EXPOSE 3128
-CMD cd /opt/cuttle && bin/cuttle -f cuttle.yml
+CMD cd /opt/cuttle && bin/cuttle -f config/cuttle.yml
