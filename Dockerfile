@@ -1,5 +1,5 @@
 
-FROM golang:alpine
+FROM golang:1.14-buster
 
 # Install go + build dependencies
 RUN apk add --update git
