@@ -2,7 +2,7 @@
 FROM golang:1.14-buster
 
 # Install go + build dependencies
-RUN apk add --update git
+# RUN apk add --update git
 
 # Get and build Cuttle
 RUN mkdir -p /opt/cuttle \
@@ -15,7 +15,7 @@ COPY cert.pem /opt/cuttle/config/
 COPY key.pem /opt/cuttle/config/
 
 # Clean up (trims image size)
-RUN apk del git && rm -rf /var/cache/apk/*
+# RUN apk del git && rm -rf /var/cache/apk/*
 
 EXPOSE 3128
 CMD cd /opt/cuttle && bin/cuttle -f config/cuttle.yml
