@@ -20,6 +20,10 @@ tlsverify: false  # Turn off TLS cert verification for upstream servers.
 # Example - Only throttle *.github.com and no rate limit on other domains.
 #
 zones:
+  - host: "*.freshdesk.com"  # Apply to requests forwarded to all sub-domains of github.com.
+    shared: false  # The rate limit is applied to each sub-domain of github.com separately.
+    control: rps  # Use request-per-second rate limit control.
+    rate: 3  # At most 3 requests per second forwarded per each sub-domain.
   - host: "api.meraki.com"  # Apply to requests forwarded to all sub-domains of github.com.
     shared: false  # The rate limit is applied to each sub-domain of github.com separately.
     control: rps  # Use request-per-second rate limit control.
