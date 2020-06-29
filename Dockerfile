@@ -11,6 +11,8 @@ RUN mkdir -p /opt/cuttle \
 
 # Copy config
 COPY cuttle.yml /opt/cuttle/config/
+#COPY cert.pem /opt/cuttle/config/
+#COPY key.pem /opt/cuttle/config/
 
 # Clean up (trims image size)
 RUN apk del git && rm -rf /var/cache/apk/*
