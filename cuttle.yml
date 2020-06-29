@@ -4,7 +4,7 @@ addr: :3128
 # cacert: './cert.pem'  # Optional. CA cert used for TLS between user and cuttle.
 # cakey: './key.pem'  # Optional. CA private key used for TLS between user and cuttle.
 
-# tlsverify: false  # Turn off TLS cert verification for upstream servers.
+tlsverify: false  # Turn off TLS cert verification for upstream servers.
 #                   # IMPORTANT: Use this option carefully.
 
 # List of rate limit zones identified by their 'host' field.

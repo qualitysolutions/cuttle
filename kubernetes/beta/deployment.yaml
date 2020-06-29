@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: cuttle-beta
+  name: cuttle-beta
+  namespace: beta
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cuttle-beta
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: cuttle-beta
+    spec:
+      containers:
+        - image: gcr.io/qls-cloud-platform/github.com/qualitysolutions/cuttle
+          imagePullPolicy: IfNotPresent
+          name: cuttle-1
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  labels:
+    app: cuttle-beta
+  name: cuttle-beta-hpa-cbwe
+  namespace: beta
+spec:
+  maxReplicas: 5
+  metrics:
+    - resource:
+        name: cpu
+        targetAverageUtilization: 80
+      type: Resource
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: cuttle-beta
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: cuttle-beta
+  name: cuttle-beta-service
+  namespace: beta
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+    - nodePort: 32042
+      port: 3128
+      protocol: TCP
+      targetPort: 3128
+  selector:
+    app: cuttle-beta
+  sessionAffinity: None
+  type: NodePort
